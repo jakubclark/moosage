@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "moosage-common",
+    "moosage"
+]

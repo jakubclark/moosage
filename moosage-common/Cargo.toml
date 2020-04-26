@@ -1,0 +1,15 @@
+[package]
+name = "moosage-common"
+version = "0.1.0"
+authors = ["Kuba Clark <jakub.clark@protonmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tonic = "0.2.0"
+prost = "0.6.1"
+#tokio = "0.2.19"
+
+[build-dependencies]
+tonic-build = "0.2.0"

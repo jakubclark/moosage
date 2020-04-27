@@ -8,8 +8,7 @@ edition = "2018"
 
 [dependencies]
 moosage-common = { path = "../moosage-common" }
-tokio = { version = "0.2.19", features = ["full"] }
+tokio = { version = "0.2", features = ["macros", "sync", "rt-threaded"] }
 tonic = "0.2.0"
-tracing = "0.1.13"
 futures-core = "0.3.4"
 async-stream = "0.2.1"

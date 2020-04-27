@@ -12,4 +12,5 @@ message Empty { }
 
 message ChatMessage {
     string text = 1;
+    string user = 2;
 }

@@ -9,7 +9,6 @@ edition = "2018"
 [dependencies]
 tonic = "0.2.0"
 prost = "0.6.1"
-#tokio = "0.2.19"
 
 [build-dependencies]
 tonic-build = "0.2.0"

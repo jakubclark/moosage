@@ -4,6 +4,15 @@ A cow-themed chat system, implemented in Rust using gRPC.
 
 Mostly meant to learn more about [`tonic`](https://crates.io/crates/tonic), [`tokio`](https://crates.io/crates/tokio) and [`tracing`](https://crates.io/crates/tracing).
 
+# Demo
+
+1. Start the server:
+    - `cargo run -p moosage-server`
+2. Start the client:
+    - `cargo run -p moosage-client`
+3. Send a message:
+    - Send a message using something like [`bloomrpc`](https://github.com/uw-labs/bloomrpc)
+
 # crates
 
 ### [moosage-common](./moosage-common)

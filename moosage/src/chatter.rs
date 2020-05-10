@@ -1,12 +1,14 @@
 use async_stream::try_stream;
 use moosage_common::chat::chat_service_server::ChatService as ChatServiceTrait;
-use moosage_common::chat::{ChatMessage, Empty};
+use moosage_common::chat::{ChatMessage, Empty, User, Uuid};
 use std::pin::Pin;
 use tokio::sync::watch;
 use tonic::{Request, Response, Status};
 
 type MessageProducer = watch::Sender<ChatMessage>;
 type MessageConsumer = watch::Receiver<ChatMessage>;
+
+const UUID_BYTES: &[u8] = "52140956-25db-4a05-8d60-57784095da1b".as_bytes();
 
 #[derive(Debug)]
 pub struct Chatter {
@@ -16,10 +18,14 @@ pub struct Chatter {
 
 impl Chatter {
     pub fn new() -> Self {
-        let (producer, consumer) = watch::channel(ChatMessage {
-            text: String::from("🐮 The cow goes moo!"),
-            user: String::from("master-cow"),
+        let text = String::from("🐮 The cow goes moo!");
+        let user = Some(User {
+            name: String::from("mastetr-cow"),
+            id: Some(Uuid {
+                uuid: Vec::from(UUID_BYTES),
+            }),
         });
+        let (producer, consumer) = watch::channel(ChatMessage { text, user });
         Self { producer, consumer }
     }
 }

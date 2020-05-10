@@ -8,9 +8,18 @@ service ChatService {
     rpc SendMessage(ChatMessage) returns (Empty) {};
 }
 
+message User {
+    string name = 1;
+    Uuid id = 2;
+}
+
+message Uuid {
+    bytes uuid = 1;
+}
+
 message Empty { }
 
 message ChatMessage {
     string text = 1;
-    string user = 2;
+    User user = 2;
 }

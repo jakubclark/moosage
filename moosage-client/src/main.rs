@@ -1,21 +1,32 @@
-use moosage_common::{chat, chat::chat_service_client::ChatServiceClient};
+use moosage_common::chat::{ChatMessage, User, Uuid};
+mod chatter;
+use crate::chatter::BlockingChatter;
+use uuid::Uuid as UuidGenerator;
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut client = ChatServiceClient::connect("http://[::1]:50051").await?;
-    let mut stream = client.subscribe(chat::Empty {}).await?.into_inner();
+fn main() -> anyhow::Result<()> {
+    let mut client = BlockingChatter::connect("http://[::1]:50051")?;
 
-    let handle = tokio::spawn(async move {
-        while let Some(message) = stream
-            .message()
-            .await
-            .expect("Could not fetch next message")
-        {
-            println!("{}: {}", message.user, message.text);
-        }
-    });
+    let uuid = UuidGenerator::new_v4().as_bytes().to_vec();
 
-    handle.await?;
+    let name = String::from("rust");
+    let id = Some(Uuid { uuid });
+
+    let user = Some(User { name, id });
+    let text = String::from("Hello from a blocking gRPC client!");
+
+    let msg = ChatMessage { user, text };
+
+    client
+        .send_message(msg)
+        .expect("Could not send message to the chat system");
+
+    let receiver = client
+        .subscribe()
+        .expect("Could not subscribe to chat system");
+
+    while let Ok(msg) = receiver.recv() {
+        println!("{}: {}", msg.user.unwrap().name, msg.text);
+    }
 
     Ok(())
 }

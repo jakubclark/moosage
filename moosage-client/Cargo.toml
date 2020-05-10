@@ -8,4 +8,7 @@ edition = "2018"
 
 [dependencies]
 moosage-common = { path = "../moosage-common" }
-tokio = { version = "0.2", features = ["macros", "rt-core", "blocking"] }
+tokio = { version = "~0.2", features = ["macros", "rt-threaded"] }
+tonic = "~0.2"
+anyhow = "~1.0"
+uuid = { version = "~0.8", features = ["v4"] }
